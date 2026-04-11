@@ -7,41 +7,77 @@ fn main() -> LuaResult<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs::File;
+    use std::io::prelude::*;
 
     #[test]
     fn test_one() -> LuaResult<()> {
         let lua = Lua::new();
         let from_rust_int: i32 = 12;
 
-        //1. create and set value of variable in lua instance using a rust variable
         lua.globals().set("from_rust_int", from_rust_int)?;
 
-        //2. create integer in lua instance and initialize with in same instance
         lua.load("from_lua_int = 21").exec()?;
         let from_lua_int: i32 = lua.globals().get("from_lua_int")?;
 
         assert_eq!(from_rust_int, 12);
 
-        //3. create variable to hold value of from_rust_int variable
         lua.load("bind_check = from_rust_int").exec()?;
         let mut bind_check: i32 = lua.globals().get("bind_check")?;
 
-        //4. assert from_rust is still its initialization value
         assert_eq!(from_rust_int, 12);
-        //5. assert variable holding lua instance is initialization value
         assert_eq!(bind_check, 12);
-        //6. assert that expected value from variable initialization in the lua
-        //instance is the value of 21 which it was initialized with.
         assert_eq!(from_lua_int, 21);
 
-        //7. change value of variable that was inlitalized with a value from rust
         lua.load("bind_check = 110").exec()?;
-        //8. assert that rust value has not changed before syncing with value in
-        //rust from instance
         assert_eq!(bind_check, 12);
-        //9. load new value of bind_check from lua and assert that it has changed
+
         bind_check = lua.globals().get("bind_check")?;
         assert_eq!(bind_check, 110);
+
+        Ok(())
+    }
+
+    #[test]
+    fn get_values_from_file() -> LuaResult<()> {
+        let lua = Lua::new();
+        let mut file = match File::open("test/default_values.lua") {
+            Err(why) => panic!("coudln't open default_values: {}", why),
+            Ok(file) => file,
+        };
+
+        let mut config = String::new();
+        match file.read_to_string(&mut config) {
+            Ok(_) => {}
+            Err(why) => panic!("could not read config file: {}", why),
+        };
+
+        match lua.load(config).exec() {
+            Ok(_) => {}
+            Err(why) => panic!(
+                "critical error during testing unable to load config to lua: {}",
+                why
+            ),
+        };
+
+        let option_a: i32 = match lua.globals().get("option_a") {
+            Ok(value) => value,
+            Err(why) => panic!("critical error getting value: {}", why),
+        };
+
+        let option_b: i32 = match lua.globals().get("option_b") {
+            Ok(value) => value,
+            Err(why) => panic!("critical error getting value: {}", why),
+        };
+
+        let option_c: i32 = match lua.globals().get("option_c") {
+            Ok(value) => value,
+            Err(why) => panic!("critical error getting value: {}", why),
+        };
+
+        assert_eq!(option_a, 12);
+        assert_eq!(option_b, 1000);
+        assert_eq!(option_c, 130);
 
         Ok(())
     }
