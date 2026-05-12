@@ -10,7 +10,7 @@ pkgs.mkShell {
     
     pkg-config
     wrapGAppsHook4
-    nodejs # Optional, this is for if you have a js frontend
+    bun
   ];
 
   buildInputs = with pkgs; [
