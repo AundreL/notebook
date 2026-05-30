@@ -17,7 +17,9 @@
         {
             devShells = forAllSystems(system:
             let
-            in {};
+            in {
+                default =
+            };
 
             );
         };
