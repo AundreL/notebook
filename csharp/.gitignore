@@ -1,0 +1,56 @@
+# ==========================================
+# 1. .NET / C# Specific
+# ==========================================
+# Build outputs
+[Bb]in/
+[Oo]bj/
+
+# Source Control-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / Resharper
+.idea/
+*.sln.iml
+
+# Regular MSBuild and .NET Tools tracking
+.baked
+*.clog
+_ReSharper*/
+*.dtbcache.json
+
+# NuGet Packages and crash logs
+*.nupkg
+*.nuget.dgspec.json
+*.vshost.exe
+*.vshost.exe.manifest
+*.manifest
+*.gcno
+
+# ==========================================
+# 2. Nix Specific
+# ==========================================
+# If you use direnv to automatically load your nix shell
+.direnv/
+
+# Result symlinks created by nix-build or nix build
+result
+result-*
+
+# ==========================================
+# 3. Code Quality / Linter Caches
+# ==========================================
+# Local CSharpier caches
+.csharpier/
+
+# ==========================================
+# 4. OS & Editors
+# ==========================================
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# Mac clutter
+.DS_Store
