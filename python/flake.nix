@@ -33,8 +33,8 @@
                     default = pkgs.mkShell {
                         # The packages you want available in your shell
                         packages = with pkgs; [
-                            python311 # The core Python interpreter
-                            python311Packages.pip # Package manager
+                            python312 # The core Python interpreter
+                            python312Packages.pip # Package manager
 
                             # Development Tooling
                             pyright # Excellent Python Language Server
