@@ -37,6 +37,7 @@
                             python312Packages.pip # Package manager
 
                             # Development Tooling
+                            uv # project manager
                             pyright # Excellent Python Language Server
                             ruff # Blazing fast Rust-based linter and formatter
                         ];
