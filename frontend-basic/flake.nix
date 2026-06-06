@@ -30,17 +30,10 @@
                default = pkgs.mkShell {
                   packages = with pkgs; [
                      # The core multi-language formatter
-<<<<<<< HEAD
-                     nodePackages.prettier
-
-                     # Optional: Minimal Node runtime if you need to execute script files or npm scripts
-                     nodejs_22
-=======
                      prettier
 
                      # Optional: Minimal Node runtime if you need to execute script files or npm scripts
                      nodejs
->>>>>>> 98b03d9 (adding python to notes and nodejs)
                   ];
 
                   shellHook = ''
