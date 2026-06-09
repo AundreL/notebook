@@ -18,7 +18,16 @@ fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 
-//pointers
+struct Window {
+    width: u32,
+    height: u32,
+}
+
+impl Window {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
 
 #[cfg(test)]
 mod test {
@@ -62,5 +71,15 @@ mod test {
         assert_eq!(res_c, 36);
         assert_eq!(worker_c.name, "use_3_square");
         assert_eq!(worker_c.id, 3);
+    }
+
+    #[test]
+    fn window_area() {
+        let window = Window {
+            width: 40,
+            height: 100,
+        };
+
+        assert_eq!(window.area(), 4000);
     }
 }
