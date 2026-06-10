@@ -29,6 +29,18 @@ impl Window {
     }
 }
 
+fn take_ownership(string_in: String) {
+    println!("takes ownership of string_in: {}", string_in)
+}
+
+fn take_ref(string_in: &String) {
+    println!("borrows string_in: {}", string_in);
+}
+
+fn modify_ref(string_in: &mut String) {
+    *string_in = String::from("new string value");
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -81,5 +93,34 @@ mod test {
         };
 
         assert_eq!(window.area(), 4000);
+    }
+
+    #[test]
+    fn ownership_test() {
+        let string_in = String::from("test string");
+
+        //move ownership to function
+        take_ownership(string_in);
+
+        //compiler error: borrow of moved value: `string_in`
+        //println!("{}", string_in):
+    }
+    #[test]
+    fn borrow_test() {
+        let string_in = String::from("test string");
+
+        take_ref(&string_in);
+
+        //should be able to string use
+        assert_eq!(string_in, "test string");
+        assert_ne!(string_in, "should fail");
+    }
+    #[test]
+    fn modify_test() {
+        let mut string_in = String::from("test string");
+
+        assert_eq!(string_in, "test string");
+        modify_ref(&mut string_in);
+        assert_eq!(string_in, "new string value");
     }
 }
